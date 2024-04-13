@@ -53,7 +53,6 @@ dependencies:
   # code from a Retrofit interface.
   retrofit_generator: ^7.0.1+1
 
-  # json_annotation: ^4.8.1 - Provides code generation for JSON 
   # serialization and deserialization.
   json_annotation: ^4.8.1
 
