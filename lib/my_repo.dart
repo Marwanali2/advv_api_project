@@ -6,14 +6,18 @@ class MyRepo {
   MyRepo(this.webServices);
 
   Future<List<User>> getAllUsers() async {
-    var responseList = await webServices
-        .getAllUsers(); // contains list of all users (all the responseList)
-    return responseList.map((signleUserMapFromJson) => User.fromJson(signleUserMapFromJson.toJson())).toList();
+    return await webServices.getAllUsers(); 
+   
   }
 
  Future<User> getUserById(int userId) async {
-     var responseSingleUserMap = await webServices.getUserById(userId);
-     return User.fromJson(responseSingleUserMap.toJson()) ;
+     return await webServices.getUserById(userId);  
   }
 
+ Future<User> createNewUser(User newUser) async {
+     return await webServices.createNewUser(newUser, 'Bearer 523f54c2fc9a3e8828136b527b6414ebe6575ff5c93424280b3cea43135a9201');
+  }
+   Future<dynamic> deleteUser(int id) async {
+     return await webServices.deleteUser(id, 'Bearer 523f54c2fc9a3e8828136b527b6414ebe6575ff5c93424280b3cea43135a9201');
+  }
 }

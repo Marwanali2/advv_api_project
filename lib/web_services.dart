@@ -16,5 +16,10 @@ abstract class WebServices {
       @Path('id')
       int id); // كده هو فهم ان ال id عبارة عن path و هيبدله بالid الرقم بتاعي
 
+  @POST('users')
+  Future<User> createNewUser(
+      @Body() User newUser, @Header('Authorization') String token);
 
+  @DELETE('users/{id}')
+  Future<dynamic> deleteUser(@Path('id') int id,@Header('Authorization') String token);
 }

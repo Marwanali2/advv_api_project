@@ -30,7 +30,14 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     // BlocProvider.of<MyCubit>(context).emitgetAllUsers();
-    BlocProvider.of<MyCubit>(context).emitgetUserDetails(6850117);
+    // BlocProvider.of<MyCubit>(context).emitgetUserDetails(6850117);
+    // BlocProvider.of<MyCubit>(context).emitCreateNewUser(User(
+    //   name: "maro",
+    //   email: 'maro@gmail.com',
+    //   gender: 'male',
+    //   status: 'active',
+    // ));
+    BlocProvider.of<MyCubit>(context).emitdeleteUser(6850116);
     super.initState();
   }
 
@@ -44,14 +51,13 @@ class _HomePageState extends State<HomePage> {
         children: [
           BlocBuilder<MyCubit, MyState>(
             builder: (context, state) {
-              if (state is GetUserDetails) {
-                user = (state).userDetails;
+              if (state is DeleteUser) {
                 return Container(
-                  height: 50,
+                  height: 50, 
                   color: Colors.blue,
                   child: Center(
                     child: Text(
-                     user.name.toString(),
+                     state.data.toString(),
                     ),
                   ),
                 );
