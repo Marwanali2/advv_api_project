@@ -11,7 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<User> usersList = [];
+  //List<User> usersList = [];
+  User user = User();
+
   List<Color> colors = [
     Colors.blue,
     Colors.blue.shade800,
@@ -27,7 +29,8 @@ class _HomePageState extends State<HomePage> {
   ];
   @override
   void initState() {
-    BlocProvider.of<MyCubit>(context).emitgetAllUsers();
+    // BlocProvider.of<MyCubit>(context).emitgetAllUsers();
+    BlocProvider.of<MyCubit>(context).emitgetUserDetails(6850117);
     super.initState();
   }
 
@@ -41,26 +44,16 @@ class _HomePageState extends State<HomePage> {
         children: [
           BlocBuilder<MyCubit, MyState>(
             builder: (context, state) {
-              if (state is GetAllUsers) {
-                usersList = state.allUsersList;
-                return ListView.builder(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(8),
-                  itemCount: usersList.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: Container(
-                        height: 50,
-                        color: colors[index % colors.length],
-                        child: Center(
-                          child: Text(
-                            usersList[index].name.toString(),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+              if (state is GetUserDetails) {
+                user = (state).userDetails;
+                return Container(
+                  height: 50,
+                  color: Colors.blue,
+                  child: Center(
+                    child: Text(
+                     user.name.toString(),
+                    ),
+                  ),
                 );
               } else {
                 return const Center(child: CircularProgressIndicator());

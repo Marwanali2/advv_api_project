@@ -10,4 +10,10 @@ class MyRepo {
         .getAllUsers(); // contains list of all users (all the responseList)
     return responseList.map((signleUserMapFromJson) => User.fromJson(signleUserMapFromJson.toJson())).toList();
   }
+
+ Future<User> getUserById(int userId) async {
+     var responseSingleUserMap = await webServices.getUserById(userId);
+     return User.fromJson(responseSingleUserMap.toJson()) ;
+  }
+
 }
