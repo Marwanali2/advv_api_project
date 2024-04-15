@@ -1,4 +1,6 @@
 import 'package:api_project/cubit/my_cubit.dart';
+import 'package:api_project/cubit/result_state.dart';
+import 'package:api_project/network_exceptions.dart';
 import 'package:api_project/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,13 +33,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // BlocProvider.of<MyCubit>(context).emitgetAllUsers();
     // BlocProvider.of<MyCubit>(context).emitgetUserDetails(6850117);
-    // BlocProvider.of<MyCubit>(context).emitCreateNewUser(User(
-    //   name: "maro",
-    //   email: 'maro@gmail.com',
-    //   gender: 'male',
-    //   status: 'active',
-    // ));
-    BlocProvider.of<MyCubit>(context).emitdeleteUser(6850116);
+    BlocProvider.of<MyCubit>(context).emitCreateNewUser(User(
+      name: "maro",
+      email: 'maro@xgmail.com',
+      gender: 'male',
+      status: 'active',
+    ));
+    //  BlocProvider.of<MyCubit>(context).emitdeleteUser(6850116);
     super.initState();
   }
 
@@ -49,21 +51,54 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          BlocBuilder<MyCubit, MyState>(
-            builder: (context, state) {
-              if (state is DeleteUser) {
-                return Container(
+          // BlocBuilder<MyCubit, MyState>(
+          //   builder: (context, state) {
+          //     if (state is DeleteUser) {
+          //       return Container(
+          //         height: 50,
+          //         color: Colors.blue,
+          //         child: Center(
+          //           child: Text(
+          //            state.data.toString(),
+          //           ),
+          //         ),
+          //       );
+          //     } else {
+          //       return const Center(child: CircularProgressIndicator());
+          //     }
+          //   },
+          // )
+
+          BlocBuilder<MyCubit, ResultState<User>>(
+            builder: (context, ResultState<User> state) {
+              return state.when(
+                idel: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                success: (User userData) {
+                  return Container(
                   height: 50, 
                   color: Colors.blue,
                   child: Center(
                     child: Text(
-                     state.data.toString(),
+                     userData.email.toString(),
                     ),
                   ),
                 );
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
+                },
+                error: (NetworkExceptions networkExceptions) =>  Center(
+                  child:Container(
+                  height: 50, 
+                  color: Colors.red,
+                  child: Center(
+                    child: Text(NetworkExceptions.getErrorMessage(networkExceptions)),
+                  ),
+                )
+                ),
+              );
             },
           )
         ],
